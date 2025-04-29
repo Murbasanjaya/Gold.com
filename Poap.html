@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game Tebak Angka</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #74ebd5, #9face6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 300px;
+    }
+    h1 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+    #levelText {
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: #555;
+    }
+    input {
+      padding: 10px;
+      width: 60%;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #3498db;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Tebak Angka</h1>
+  <p id="levelText">Level 1 - Tebak angka antara 1 dan 10</p>
+  <input type="number" id="guess" placeholder="Masukkan angka">
+  <br>
+  <button onclick="checkGuess()">Tebak!</button>
+  <div id="result"></div>
+</div>
+
+<script>
+  let level = 1;
+  let maxNumber = 10;
+  let target = Math.floor(Math.random() * maxNumber) + 1;
+
+  function checkGuess() {
+    const guess = parseInt(document.getElementById('guess').value);
+    const result = document.getElementById('result');
+
+    if (!guess || guess < 1 || guess > maxNumber) {
+      result.textContent = `Masukkan angka antara 1 dan ${maxNumber}`;
+      result.style.color = "orange";
+      return;
+    }
+
+    if (guess === target) {
+      result.textContent = "Benar! Naik level!";
+      result.style.color = "green";
+      nextLevel();
+    } else if (guess < target) {
+      result.textContent = "Terlalu kecil!";
+      result.style.color = "red";
+    } else {
+      result.textContent = "Terlalu besar!";
+      result.style.color = "red";
+    }
+  }
+
+  function nextLevel() {
+    level++;
+    maxNumber += 5;
+    target = Math.floor(Math.random() * maxNumber) + 1;
+
+    document.getElementById('levelText').textContent =
+      `Level ${level} - Tebak angka antara 1 dan ${maxNumber}`;
+    document.getElementById('guess').value = '';
+  }
+</script>
+
+</body>
+</html>
